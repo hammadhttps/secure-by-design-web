@@ -1,0 +1,177 @@
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 17:49:05"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 17:49:05"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 17:49:05"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 17:49:05"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 17:49:05"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:49:37"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:49:37"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:49:37"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:49:37"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:49:38"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:49:38"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/login","sessionId":"-6PPDiJC5rnS03Z36fvrZ1r1L-4lUNED","timestamp":"2025-12-07 17:50:09","tokenReceived":"none"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/login","sessionId":"-6PPDiJC5rnS03Z36fvrZ1r1L-4lUNED","timestamp":"2025-12-07 17:50:26","tokenReceived":"none"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/login","sessionId":"-6PPDiJC5rnS03Z36fvrZ1r1L-4lUNED","timestamp":"2025-12-07 17:50:36","tokenReceived":"none"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/login","sessionId":"-6PPDiJC5rnS03Z36fvrZ1r1L-4lUNED","timestamp":"2025-12-07 17:51:37","tokenReceived":"none"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:51:52"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:51:52"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:51:54"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:51:54"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:51:55"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:51:55"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/login","sessionId":"B1zTsk5ZTnA4--3n8LrAtU2UPNeNUS0I","timestamp":"2025-12-07 17:52:01","tokenReceived":"none"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 17:52:09"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 17:52:09"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 17:52:09"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 17:52:09"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 17:52:09"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:52:13"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:52:13"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/login","sessionId":"lCCooQQWgBkpKSxQVjGQYtAQokdo8yWF","timestamp":"2025-12-07 17:52:20","tokenReceived":"none"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 17:52:45"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 17:52:45"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 17:52:45"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 17:52:45"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 17:52:45"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:52:50"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:52:50"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:53:42"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:53:42"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/login","sessionId":"LltZd2LpsK5uk9vnGGRCbAzOSNma0Vz8","timestamp":"2025-12-07 17:54:44","tokenReceived":"none"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:56:26"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:56:35"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:56:37"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:56:40"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:56:42"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 17:56:56"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 17:56:56"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 17:56:56"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 17:56:56"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 17:56:56"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 17:57:16"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 17:57:16"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 17:57:16"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 17:57:16"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 17:57:16"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 17:57:34"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 17:57:34"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 17:57:34"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 17:57:34"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 17:57:34"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"f6mYHdwnoqBtTrPxtnJKbGXuega_4lFT","timestamp":"2025-12-07 17:57:38","tokenReceived":"1oZCUDaj-WNQsNOw2NCFioJehO086_RJ3VnI"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"f6mYHdwnoqBtTrPxtnJKbGXuega_4lFT","timestamp":"2025-12-07 17:57:38","tokenReceived":"1oZCUDaj-WNQsNOw2NCFioJehO086_RJ3VnI"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:57:41"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:57:41"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:58:08"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 17:58:08"}
+{"email":"hammadulhassan2620@gmail.com","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 17:58:13"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 17:58:14","userId":1}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 17:58:30"}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 17:58:30"}
+{"level":"info","message":"[PostController] Post created","postId":2,"timestamp":"2025-12-07 18:00:13","userId":1}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 18:00:13"}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 18:00:18"}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 18:00:18"}
+{"email":"hammadulhassan2620@gmail.com","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 18:00:25"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 18:00:25","userId":1}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 18:00:27"}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 18:00:27"}
+{"email":"hassanzain1226@gmail.com","level":"info","message":"[AuthController] Registration attempt","timestamp":"2025-12-07 18:01:07","username":"hammad2926"}
+{"level":"info","message":"[AuthController] User registered successfully","timestamp":"2025-12-07 18:01:07","userId":2}
+{"email":"hammadulhassan2620@gmail.com","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 18:02:46"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 18:02:46","userId":1}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 18:02:48"}
+{"level":"error","message":"[PostController] Get posts error: Cannot read properties of undefined (reading 'total')","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at getPosts (C:\\Users\\LaptopWala\\OneDrive\\Desktop\\secure-by-design-web\\backend\\controllers\\postController.js:51:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-12-07 18:02:48"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:03:43"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:03:43"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:03:43"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:03:43"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:03:43"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:03:56"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:03:56"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:03:56"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:03:56"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:03:56"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 18:04:04"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 18:04:04"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:04:26"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:04:26"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:04:26"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:04:26"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:04:26"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"lYCOpZRBdH9dxdSLma6XAYrhAu3oARdN","timestamp":"2025-12-07 18:04:28","tokenReceived":"W1IKeR9s-1UaOgcz_J1v9YrL8xPNGcI2ss94"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"lYCOpZRBdH9dxdSLma6XAYrhAu3oARdN","timestamp":"2025-12-07 18:04:28","tokenReceived":"W1IKeR9s-1UaOgcz_J1v9YrL8xPNGcI2ss94"}
+{"email":"hammadulhassan2620@gmail.com","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 18:04:37"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 18:04:37","userId":1}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"CLQM_SrdM25ErYlp_erBomuQeBsONL2R","timestamp":"2025-12-07 18:05:24","tokenReceived":"none"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"CLQM_SrdM25ErYlp_erBomuQeBsONL2R","timestamp":"2025-12-07 18:05:24","tokenReceived":"none"}
+{"email":"hassanzain1226@gmail.com","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 18:05:26"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 18:05:27","userId":2}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"0TgNW-CLcd83aw3MnCUMoDhCpJpSau2f","timestamp":"2025-12-07 18:06:02","tokenReceived":"none"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"0TgNW-CLcd83aw3MnCUMoDhCpJpSau2f","timestamp":"2025-12-07 18:06:02","tokenReceived":"none"}
+{"email":"hassanzain1226@gmail.com","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 18:06:04"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 18:06:04","userId":2}
+{"level":"info","message":"[PostController] Post created","postId":3,"timestamp":"2025-12-07 18:06:34","userId":2}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:09:23"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:09:23"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:09:23"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:09:23"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:09:23"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:09:31"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:09:31"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:09:31"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:09:31"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:09:31"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:10:13"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:10:13"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:10:13"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:10:13"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:10:13"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:10:23"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:10:23"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:10:23"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:10:23"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:10:23"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:10:29"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:10:29"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:10:29"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:10:29"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:10:29"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:10:42"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:10:42"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:10:42"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:10:42"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:10:42"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:10:44"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:10:44"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:10:44"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:10:44"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:10:44"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:11:51"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:11:51"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:11:51"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:11:51"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:11:51"}
+{"level":"info","message":"[Database] Database connection successful","timestamp":"2025-12-07 18:13:07"}
+{"level":"info","message":"[Database] Host: localhost:3306","timestamp":"2025-12-07 18:13:07"}
+{"level":"info","message":"[Database] Database: security_project","timestamp":"2025-12-07 18:13:07"}
+{"level":"info","message":"[Database] User: root","timestamp":"2025-12-07 18:13:07"}
+{"level":"info","message":"[Database] Database tables initialized successfully","timestamp":"2025-12-07 18:13:07"}
+{"email":"l215812@lhr.nu.edu.pk","level":"info","message":"[AuthController] Registration attempt","timestamp":"2025-12-07 18:13:33","username":"admin786"}
+{"level":"info","message":"[AuthController] User registered successfully","timestamp":"2025-12-07 18:13:34","userId":3}
+{"argon2Time":232,"bcryptTime":422,"comparisonId":1,"level":"info","message":"[HashComparisonService] Hash comparison saved","timestamp":"2025-12-07 18:13:34","userId":3}
+{"email":"l215812@lhr.nu.edu.pk","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 18:14:08"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 18:14:09","userId":3}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"Okj0_8B1AzDgq4Q7kjkNGXEbkUhNcqpP","timestamp":"2025-12-07 18:41:19","tokenReceived":"none"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"Okj0_8B1AzDgq4Q7kjkNGXEbkUhNcqpP","timestamp":"2025-12-07 18:41:19","tokenReceived":"none"}
+{"email":"hammadulhassan2620@gmail.com","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 18:41:25"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 18:41:26","userId":1}
+{"level":"info","message":"[PostController] Post created","postId":4,"timestamp":"2025-12-07 18:44:11","userId":1}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/register","sessionId":"Okj0_8B1AzDgq4Q7kjkNGXEbkUhNcqpP","timestamp":"2025-12-07 18:44:52","tokenReceived":"none"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/posts","sessionId":"Okj0_8B1AzDgq4Q7kjkNGXEbkUhNcqpP","timestamp":"2025-12-07 18:45:13","tokenReceived":"fake-token-12345"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 18:57:32"}
+{"ip":"::1","level":"warn","message":"[Auth] Unauthorized access attempt","method":"GET","path":"/","timestamp":"2025-12-07 18:57:32"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"jdpvoINLDtGKQrqZKM1NPt2BaTvJ7Mqe","timestamp":"2025-12-07 18:57:40","tokenReceived":"iUxrrTko-2Du-mUeNdONKuWU_tQs0DEFzGEw"}
+{"level":"error","message":"[CSRF] CSRF token validation failed:","method":"POST","path":"/api/auth/login","sessionId":"jdpvoINLDtGKQrqZKM1NPt2BaTvJ7Mqe","timestamp":"2025-12-07 18:57:40","tokenReceived":"iUxrrTko-2Du-mUeNdONKuWU_tQs0DEFzGEw"}
+{"email":"hammadulhassan2620@gmail.com","ip":"::1","level":"info","message":"[AuthController] Login attempt","timestamp":"2025-12-07 18:57:41"}
+{"level":"info","message":"[AuthController] User logged in successfully","timestamp":"2025-12-07 18:57:41","userId":1}
