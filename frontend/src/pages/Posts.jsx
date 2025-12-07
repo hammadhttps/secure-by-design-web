@@ -27,17 +27,47 @@ const Posts = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('/api/posts');
+      const response = await axios.get('/api/posts', {
+        withCredentials: true
+      });
+      
+      // The backend returns { posts: [...], pagination: {...} }
+      const postsData = response.data.posts || response.data || [];
+      
+      // Ensure postsData is an array
+      if (!Array.isArray(postsData)) {
+        console.error('Invalid posts data format:', response.data);
+        setError('Invalid data format received from server');
+        setPosts([]);
+        return;
+      }
+      
       // Sanitize all post content before displaying
-      const sanitizedPosts = response.data.map(post => ({
+      const sanitizedPosts = postsData.map(post => ({
         ...post,
-        title: DOMPurify.sanitize(post.title),
-        content: DOMPurify.sanitize(post.content),
-        username: DOMPurify.sanitize(post.username)
+        title: DOMPurify.sanitize(post.title || ''),
+        content: DOMPurify.sanitize(post.content || ''),
+        username: post.username ? DOMPurify.sanitize(post.username) : 'Unknown'
       }));
+      
       setPosts(sanitizedPosts);
+      setError(''); // Clear any previous errors
     } catch (error) {
       console.error('Failed to fetch posts:', error);
+      
+      // Provide more specific error messages
+      if (error.response?.status === 401) {
+        setError('You must be logged in to view posts');
+      } else if (error.response?.status === 403) {
+        setError('You do not have permission to view posts');
+      } else if (error.response?.data?.error) {
+        setError(error.response.data.error);
+      } else if (error.response?.data?.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('Failed to load posts. Please try again later.');
+      }
+      setPosts([]);
     }
   };
 

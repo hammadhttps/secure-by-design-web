@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchCsrfToken = async () => {
     try {
-      const response = await axios.get('/api/csrf-token', {
+      const response = await axios.get('/api/auth/csrf-token', {
         withCredentials: true
       });
       setCsrfToken(response.data.csrfToken);
@@ -55,20 +55,55 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/login', 
+      // Ensure we have a CSRF token before making the request
+      let token = csrfToken;
+      if (!token) {
+        await fetchCsrfToken();
+        token = csrfToken;
+      }
+      
+      const response = await axios.post('/api/auth/login', 
         { email, password },
         { 
           withCredentials: true,
-          headers: { 'X-CSRF-Token': csrfToken }
+          headers: { 'X-CSRF-Token': token }
         }
       );
       setUser(response.data.user);
-      await fetchCsrfToken(); // Get new CSRF token after login
+      // Get new CSRF token after login (session might have changed)
+      await fetchCsrfToken();
       return { success: true };
     } catch (error) {
+      // If CSRF token error, try to fetch a new token and retry once
+      if (error.response?.status === 403 && 
+          (error.response?.data?.error === 'Invalid CSRF token' || 
+           error.response?.data?.code === 'CSRF_TOKEN_INVALID')) {
+        try {
+          // Fetch a fresh token
+          await fetchCsrfToken();
+          const newToken = csrfToken;
+          
+          // Retry the login with the new token
+          const retryResponse = await axios.post('/api/auth/login', 
+            { email, password },
+            { 
+              withCredentials: true,
+              headers: { 'X-CSRF-Token': newToken }
+            }
+          );
+          setUser(retryResponse.data.user);
+          await fetchCsrfToken();
+          return { success: true };
+        } catch (retryError) {
+          return { 
+            success: false, 
+            error: retryError.response?.data?.error || retryError.response?.data?.message || 'Login failed. Please refresh the page and try again.' 
+          };
+        }
+      }
       return { 
         success: false, 
-        error: error.response?.data?.error || 'Login failed' 
+        error: error.response?.data?.error || error.response?.data?.message || 'Login failed' 
       };
     }
   };
@@ -79,7 +114,7 @@ export const AuthProvider = ({ children }) => {
       let token = csrfToken;
       if (!token) {
         // Fetch token directly to get the value immediately
-        const tokenResponse = await axios.get('/api/csrf-token', {
+        const tokenResponse = await axios.get('/api/auth/csrf-token', {
           withCredentials: true
         });
         token = tokenResponse.data.csrfToken;
@@ -87,7 +122,7 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common['X-CSRF-Token'] = token;
       }
 
-      const response = await axios.post('/api/register', 
+      const response = await axios.post('/api/auth/register', 
         userData,
         { 
           withCredentials: true,
@@ -102,7 +137,7 @@ export const AuthProvider = ({ children }) => {
            error.response?.data?.message?.includes('CSRF'))) {
         try {
           // Fetch a fresh token
-          const tokenResponse = await axios.get('/api/csrf-token', {
+          const tokenResponse = await axios.get('/api/auth/csrf-token', {
             withCredentials: true
           });
           const newToken = tokenResponse.data.csrfToken;
@@ -110,7 +145,7 @@ export const AuthProvider = ({ children }) => {
           axios.defaults.headers.common['X-CSRF-Token'] = newToken;
           
           // Retry the registration with the new token
-          const retryResponse = await axios.post('/api/register', 
+          const retryResponse = await axios.post('/api/auth/register', 
             userData,
             { 
               withCredentials: true,
@@ -134,7 +169,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post('/api/logout', {}, { withCredentials: true });
+      await axios.post('/api/auth/logout', {}, { withCredentials: true });
       setUser(null);
       setCsrfToken('');
     } catch (error) {
