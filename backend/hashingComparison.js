@@ -30,3 +30,5 @@ class HashingComparison {
     return { bcrypt: bcryptValid, argon2: argon2Valid };
   }
 }
+
+module.exports = HashingComparison;
