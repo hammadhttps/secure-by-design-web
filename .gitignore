@@ -1,0 +1,12 @@
+/.venv
+/frontend/node_modules
+/backend/node_modules
+/frontend/dist
+/backend/dist
+/frontend/build
+/backend/build
+/frontend/docs
+/backend/docs
+/frontend/tests
+/backend/tests
+/frontend/tests
