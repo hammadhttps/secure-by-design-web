@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Limiting Attack Simulator - Security Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 5px solid #5c6bc0;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header h1 i {
+            color: #ff5252;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        main {
+            display: flex;
+            min-height: 600px;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #f5f7ff;
+            padding: 25px;
+            border-right: 2px solid #e0e0e0;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            background: #fafafa;
+        }
+
+        .test-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .test-section:hover {
+            border-color: #5c6bc0;
+            box-shadow: 0 8px 25px rgba(92, 107, 192, 0.2);
+        }
+
+        .test-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .test-icon {
+            font-size: 2rem;
+            color: #5c6bc0;
+        }
+
+        .test-title {
+            font-size: 1.8rem;
+            color: #1a237e;
+            font-weight: 600;
+        }
+
+        .test-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #5c6bc0 0%, #3f51b5 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(92, 107, 192, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff5252 0%, #ff1744 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .results {
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e0e0e0;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .results-icon {
+            font-size: 1.8rem;
+            color: #4CAF50;
+        }
+
+        .results-title {
+            font-size: 1.6rem;
+            color: #1a237e;
+            font-weight: 600;
+        }
+
+        #resultsContainer {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .result-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 10px;
+            border-left: 5px solid #5c6bc0;
+            animation: fadeIn 0.5s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-success {
+            border-left-color: #4CAF50;
+            background: linear-gradient(90deg, #f1f8e9 0%, white 100%);
+        }
+
+        .result-error {
+            border-left-color: #ff5252;
+            background: linear-gradient(90deg, #ffebee 0%, white 100%);
+        }
+
+        .result-warning {
+            border-left-color: #ff9800;
+            background: linear-gradient(90deg, #fff3e0 0%, white 100%);
+        }
+
+        .result-blocked {
+            border-left-color: #9c27b0;
+            background: linear-gradient(90deg, #f3e5f5 0%, white 100%);
+        }
+
+        .result-status {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-details {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid #eee;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f5f7ff 0%, #e8eaf6 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a237e;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffecb3 100%);
+            border: 2px solid #ffb300;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .warning-box h3 {
+            color: #ff6f00;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 2px solid #eee;
+            margin-top: 30px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #5c6bc0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid #e0e0e0;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <i>🚨</i> Rate Limiting Attack Simulator
+                <i>🛡️</i>
+            </h1>
+            <p class="subtitle">
+                A comprehensive tool to test and demonstrate rate limiting protection in web applications.
+                Simulate brute force attacks, DDoS attempts, and validate your security configurations.
+            </p>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <div class="test-section">
+                    <div class="test-header">
+                        <div class="test-icon">⚙️</div>
+                        <h2 class="test-title">Test Configuration</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serverUrl">Backend Server URL:</label>
+                        <input type="text" id="serverUrl" value="http://localhost:3000" placeholder="http://localhost:3000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testType">Test Type:</label>
+                        <select id="testType">
+                            <option value="login">Login Attempts</option>
+                            <option value="register">Registration Attempts</option>
+                            <option value="api">General API Calls</option>
+                            <option value="mixed">Mixed Attack Pattern</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requestCount">Number of Requests:</label>
+                        <input type="number" id="requestCount" value="20" min="1" max="1000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="delayBetween">Delay Between Requests (ms):</label>
+                        <input type="number" id="delayBetween" value="100" min="0" max="5000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="burstMode">
+                            <input type="checkbox" id="burstMode"> Burst Mode (no delay)
+                        </label>
+                    </div>
+                    
+                    <button class="btn btn-danger" id="startTest">
+                        <span>🚀 Start Attack Simulation</span>
+                    </button>
+                    
+                    <button class="btn btn-success" id="stopTest">
+                        <span>⏹️ Stop Test</span>
+                    </button>
+                    
+                    <button class="btn" id="resetTest">
+                        <span>🔄 Reset Results</span>
+                    </button>
+                </div>
+                
+                <div class="warning-box">
+                    <h3><span>⚠️</span> Important Security Note</h3>
+                    <p>This tool is for <strong>educational purposes only</strong>. Use it only on:</p>
+                    <ul style="margin: 10px 0 10px 20px; color: #666;">
+                        <li>Your own servers</li>
+                        <li>Testing environments</li>
+                        <li>Authorized systems only</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="test-section">
+                    <div class="test-header">
+                        <div class="test-icon">📊</div>
+                        <h2 class="test-title">Test Results & Analysis</h2>
+                    </div>
+                    
+                    <div class="results">
+                        <div class="results-header">
+                            <div class="results-icon">📈</div>
+                            <h3 class="results-title">Live Results</h3>
+                        </div>
+                        
+                        <div id="resultsContainer">
+                            <div class="result-item result-warning">
+                                <div class="result-status">
+                                    <span>📋</span> Ready for Testing
+                                </div>
+                                <div class="result-details">
+                                    Configure your test parameters and click "Start Attack Simulation" to begin.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stats">
+                            <div class="stat-card">
+                                <div class="stat-label">Total Requests</div>
+                                <div class="stat-value" id="totalRequests">0</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-label">Successful</div>
+                                <div class="stat-value" id="successCount">0</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-label">Rate Limited</div>
+                                <div class="stat-value" id="rateLimitedCount">0</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-label">Blocked %</div>
+                                <div class="stat-value" id="blockedPercentage">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="test-section">
+                    <div class="test-header">
+                        <div class="test-icon">🎯</div>
+                        <h2 class="test-title">Quick Test Buttons</h2>
+                    </div>
+                    
+                    <div class="test-description">
+                        Test specific rate limiting scenarios with one click:
+                    </div>
+                    
+                    <button class="btn" id="quickBruteForce">
+                        <span>🔐</span> Brute Force Test (15 logins)
+                    </button>
+                    
+                    <button class="btn" id="quickRegisterSpam">
+                        <span>📝</span> Registration Spam (10 registrations)
+                    </button>
+                    
+                    <button class="btn" id="quickDDoSSim">
+                        <span>🌪️</span> DDoS Simulation (50 requests)
+                    </button>
+                    
+                    <button class="btn" id="testHealthEndpoint">
+                        <span>❤️</span> Test Health Endpoint
+                    </button>
+                </div>
+                
+                <div class="test-section">
+                    <div class="test-header">
+                        <div class="test-icon">📋</div>
+                        <h2 class="test-title">Test Explanation</h2>
+                    </div>
+                    
+                    <div class="test-description">
+                        <h4>What is Rate Limiting?</h4>
+                        <p>Rate limiting restricts the number of requests a user can make to an API within a specific timeframe. This prevents:</p>
+                        <ul style="margin: 10px 0 10px 20px;">
+                            <li><strong>Brute Force Attacks</strong>: Too many password guesses</li>
+                            <li><strong>DDoS Attacks</strong>: Overwhelming server with requests</li>
+                            <li><strong>Resource Abuse</strong>: Using too much server capacity</li>
+                            <li><strong>API Abuse</strong>: Scraping data or automated attacks</li>
+                        </ul>
+                        
+                        <h4>Expected Behavior:</h4>
+                        <p>A properly configured rate limiter should:</p>
+                        <ol style="margin: 10px 0 10px 20px;">
+                            <li>Allow normal usage (1-2 requests/second)</li>
+                            <li>Warn or slow down moderate abuse (5-10 requests/second)</li>
+                            <li>Block excessive abuse (15+ requests/second)</li>
+                            <li>Return HTTP 429 (Too Many Requests) status code</li>
+                            <li>Reset after the time window expires</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div class="footer">
+            <p>Rate Limiting Tester v1.0 | For Educational Use Only | Security Project Demonstration</p>
+            <p>⚠️ Do not use this tool against systems you do not own or have permission to test.</p>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let isTesting = false;
+        let testQueue = [];
+        let results = {
+            total: 0,
+            success: 0,
+            rateLimited: 0,
+            errors: 0
+        };
+        let stopTestFlag = false;
+        let csrfToken = null;
+
+        // DOM Elements
+        const startBtn = document.getElementById('startTest');
+        const stopBtn = document.getElementById('stopTest');
+        const resetBtn = document.getElementById('resetTest');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const totalRequestsEl = document.getElementById('totalRequests');
+        const successCountEl = document.getElementById('successCount');
+        const rateLimitedCountEl = document.getElementById('rateLimitedCount');
+        const blockedPercentageEl = document.getElementById('blockedPercentage');
+        const quickButtons = [
+            'quickBruteForce',
+            'quickRegisterSpam',
+            'quickDDoSSim',
+            'testHealthEndpoint'
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            updateStats();
+        });
+
+        function setupEventListeners() {
+            startBtn.addEventListener('click', startTest);
+            stopBtn.addEventListener('click', stopTest);
+            resetBtn.addEventListener('click', resetTest);
+            
+            // Quick test buttons
+            quickButtons.forEach(btnId => {
+                document.getElementById(btnId).addEventListener('click', () => {
+                    runQuickTest(btnId);
+                });
+            });
+        }
+
+        async function startTest() {
+            if (isTesting) return;
+            
+            const serverUrl = document.getElementById('serverUrl').value;
+            const testType = document.getElementById('testType').value;
+            const requestCount = parseInt(document.getElementById('requestCount').value);
+            const delay = parseInt(document.getElementById('delayBetween').value);
+            const burstMode = document.getElementById('burstMode').checked;
+            
+            if (!serverUrl) {
+                addResult('⚠️ Error', 'Please enter a server URL', 'error');
+                return;
+            }
+            
+            isTesting = true;
+            stopTestFlag = false;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            
+            addResult('🚀 Starting Test', `Testing ${requestCount} requests to ${serverUrl}`, 'warning');
+            
+            // Fetch CSRF token if needed for POST requests
+            if (testType === 'login' || testType === 'register' || testType === 'mixed') {
+                addResult('🔐 Fetching CSRF Token', 'Getting security token from server...', 'info');
+                await fetchCsrfToken(serverUrl);
+                if (csrfToken) {
+                    addResult('✅ CSRF Token Obtained', 'Security token ready', 'success');
+                } else {
+                    addResult('⚠️ CSRF Token Warning', 'Could not fetch CSRF token, some requests may fail', 'warning');
+                }
+            }
+            
+            // Create test queue based on test type
+            testQueue = generateTestRequests(testType, requestCount, serverUrl);
+            
+            // Execute tests
+            await executeTestQueue(testQueue, delay, burstMode);
+        }
+
+        function stopTest() {
+            stopTestFlag = true;
+            isTesting = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            addResult('⏹️ Test Stopped', 'Test stopped by user', 'warning');
+        }
+
+        function resetTest() {
+            results = { total: 0, success: 0, rateLimited: 0, errors: 0 };
+            resultsContainer.innerHTML = `
+                <div class="result-item result-warning">
+                    <div class="result-status">
+                        <span>📋</span> Ready for Testing
+                    </div>
+                    <div class="result-details">
+                        Configure your test parameters and click "Start Attack Simulation" to begin.
+                    </div>
+                </div>`;
+            updateStats();
+        }
+
+        function generateTestRequests(testType, count, baseUrl) {
+            const requests = [];
+            const endpoints = {
+                login: '/api/auth/login',
+                register: '/api/auth/register',
+                health: '/api/health',
+                posts: '/api/posts',
+                csrf: '/api/auth/csrf-token'
+            };
+            
+            for (let i = 0; i < count; i++) {
+                let request;
+                
+                switch(testType) {
+                    case 'login':
+                        request = {
+                            url: baseUrl + endpoints.login,
+                            method: 'POST',
+                            body: {
+                                email: `test${i}@attack.com`,
+                                password: 'WrongPassword' + i
+                            },
+                            type: 'Login Attempt'
+                        };
+                        break;
+                        
+                    case 'register':
+                        request = {
+                            url: baseUrl + endpoints.register,
+                            method: 'POST',
+                            body: {
+                                username: `attackuser${i}`,
+                                email: `attack${i}@test.com`,
+                                password: 'AttackPass123!',
+                                confirmPassword: 'AttackPass123!'
+                            },
+                            type: 'Registration Attempt'
+                        };
+                        break;
+                        
+                    case 'api':
+                        // Mix of different API calls
+                        const endpointsList = [endpoints.health, endpoints.posts, endpoints.csrf];
+                        const endpoint = endpointsList[Math.floor(Math.random() * endpointsList.length)];
+                        request = {
+                            url: baseUrl + endpoint,
+                            method: endpoint === endpoints.posts ? 'GET' : 'GET',
+                            type: 'API Call'
+                        };
+                        break;
+                        
+                    case 'mixed':
+                        // Mixed attack pattern
+                        const types = ['login', 'register', 'api'];
+                        const selectedType = types[Math.floor(Math.random() * types.length)];
+                        const tempRequest = generateTestRequests(selectedType, 1, baseUrl);
+                        request = tempRequest[0];
+                        break;
+                }
+                
+                requests.push(request);
+            }
+            
+            return requests;
+        }
+
+        async function executeTestQueue(queue, delay, burstMode) {
+            for (let i = 0; i < queue.length; i++) {
+                if (stopTestFlag) break;
+                
+                const request = queue[i];
+                
+                try {
+                    // Execute request
+                    const startTime = Date.now();
+                    const response = await executeRequest(request);
+                    const endTime = Date.now();
+                    const duration = endTime - startTime;
+                    
+                    // Process response
+                    processResponse(response, request, duration, i + 1);
+                    
+                } catch (error) {
+                    results.total++;
+                    results.errors++;
+                    const errorMsg = error.message.includes('Failed to fetch') 
+                        ? 'Backend server not reachable. Make sure it\'s running on ' + request.url.split('/api')[0] + '. Also check CORS settings.'
+                        : error.message;
+                    addResult('❌ Network Error', `Request ${i + 1}: ${errorMsg}`, 'error');
+                }
+                
+                // Delay between requests (if not burst mode)
+                if (!burstMode && i < queue.length - 1 && !stopTestFlag) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+                
+                updateStats();
+            }
+            
+            // Test complete
+            isTesting = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            
+            // Show summary
+            const blockedPercentage = ((results.rateLimited / results.total) * 100).toFixed(1);
+            addResult(
+                '🏁 Test Complete',
+                `Total: ${results.total} | Success: ${results.success} | Rate Limited: ${results.rateLimited} (${blockedPercentage}%)`,
+                results.rateLimited > 0 ? 'success' : 'warning'
+            );
+        }
+
+        async function fetchCsrfToken(serverUrl) {
+            try {
+                const response = await fetch(serverUrl + '/api/auth/csrf-token', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    csrfToken = data.csrfToken;
+                    return csrfToken;
+                }
+            } catch (error) {
+                console.warn('Failed to fetch CSRF token:', error);
+            }
+            return null;
+        }
+
+        async function executeRequest(request) {
+            const options = {
+                method: request.method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            };
+            
+            // Add CSRF token for POST requests that need it
+            if (request.method === 'POST' && csrfToken) {
+                options.headers['X-CSRF-Token'] = csrfToken;
+            }
+            
+            if (request.body) {
+                options.body = JSON.stringify(request.body);
+            }
+            
+            try {
+                const response = await fetch(request.url, options);
+                return {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers,
+                    body: await response.text().catch(() => '')
+                };
+            } catch (error) {
+                // Handle network errors
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    throw new Error('Network error: Backend server may not be running or CORS is blocking the request. Make sure the backend is running on ' + request.url.split('/api')[0]);
+                }
+                throw error;
+            }
+        }
+
+        function processResponse(response, request, duration, requestNumber) {
+            results.total++;
+            
+            let resultClass, statusIcon, statusText, details;
+            
+            if (response.status === 429) {
+                // Rate limited
+                results.rateLimited++;
+                resultClass = 'result-blocked';
+                statusIcon = '🛑';
+                statusText = 'RATE LIMITED';
+                details = `Request ${requestNumber} was rate limited (HTTP 429). Duration: ${duration}ms`;
+                
+            } else if (response.status >= 200 && response.status < 300) {
+                // Success
+                results.success++;
+                resultClass = 'result-success';
+                statusIcon = '✅';
+                statusText = 'SUCCESS';
+                details = `Request ${requestNumber} succeeded with status ${response.status}. Duration: ${duration}ms`;
+                
+            } else if (response.status === 403) {
+                // CSRF or other security block
+                resultClass = 'result-warning';
+                statusIcon = '⚠️';
+                statusText = 'SECURITY BLOCK';
+                details = `Request ${requestNumber} blocked by security (HTTP 403). Duration: ${duration}ms`;
+                
+            } else if (response.status >= 400 && response.status < 500) {
+                // Client error
+                resultClass = 'result-warning';
+                statusIcon = '⚠️';
+                statusText = 'CLIENT ERROR';
+                details = `Request ${requestNumber} failed with status ${response.status}. Duration: ${duration}ms`;
+                
+            } else if (response.status >= 500) {
+                // Server error
+                resultClass = 'result-error';
+                statusIcon = '❌';
+                statusText = 'SERVER ERROR';
+                details = `Request ${requestNumber} caused server error ${response.status}. Duration: ${duration}ms`;
+            }
+            
+            addResult(`${statusIcon} ${statusText}`, details, resultClass.replace('result-', ''));
+        }
+
+        function addResult(status, details, type = 'info') {
+            const resultItem = document.createElement('div');
+            resultItem.className = `result-item result-${type}`;
+            resultItem.innerHTML = `
+                <div class="result-status">
+                    ${status}
+                </div>
+                <div class="result-details">
+                    ${details}
+                </div>
+            `;
+            
+            resultsContainer.prepend(resultItem);
+            
+            // Auto-scroll to top
+            resultsContainer.scrollTop = 0;
+            
+            // Limit number of results shown
+            const maxResults = 50;
+            const allResults = resultsContainer.querySelectorAll('.result-item');
+            if (allResults.length > maxResults) {
+                allResults[allResults.length - 1].remove();
+            }
+        }
+
+        function updateStats() {
+            totalRequestsEl.textContent = results.total;
+            successCountEl.textContent = results.success;
+            rateLimitedCountEl.textContent = results.rateLimited;
+            
+            const blockedPercentage = results.total > 0 
+                ? ((results.rateLimited / results.total) * 100).toFixed(1) + '%'
+                : '0%';
+            blockedPercentageEl.textContent = blockedPercentage;
+        }
+
+        // Quick test functions
+        function runQuickTest(testId) {
+            if (isTesting) return;
+            
+            const serverUrl = document.getElementById('serverUrl').value;
+            
+            switch(testId) {
+                case 'quickBruteForce':
+                    simulateBruteForce(serverUrl);
+                    break;
+                case 'quickRegisterSpam':
+                    simulateRegistrationSpam(serverUrl);
+                    break;
+                case 'quickDDoSSim':
+                    simulateDDoSAttack(serverUrl);
+                    break;
+                case 'testHealthEndpoint':
+                    testHealthEndpoint(serverUrl);
+                    break;
+            }
+        }
+
+        async function simulateBruteForce(serverUrl) {
+            if (!serverUrl) {
+                addResult('⚠️ Error', 'Please enter a server URL', 'error');
+                return;
+            }
+            
+            isTesting = true;
+            startBtn.disabled = true;
+            addResult('🔐 Starting Brute Force Simulation', '15 rapid login attempts', 'warning');
+            
+            // Fetch CSRF token first
+            await fetchCsrfToken(serverUrl);
+            
+            const commonPasswords = [
+                'password', '123456', 'qwerty', 'letmein', 'admin',
+                'password123', '12345678', '123123', '111111', 'abc123',
+                'admin123', 'welcome', 'monkey', 'dragon', 'sunshine'
+            ];
+            
+            for (let i = 0; i < 15; i++) {
+                if (stopTestFlag) break;
+                
+                try {
+                    const headers = { 'Content-Type': 'application/json' };
+                    if (csrfToken) {
+                        headers['X-CSRF-Token'] = csrfToken;
+                    }
+                    
+                    const startTime = Date.now();
+                    const response = await fetch(serverUrl + '/api/auth/login', {
+                        method: 'POST',
+                        headers: headers,
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            email: 'admin@test.com',
+                            password: commonPasswords[i] || 'guess' + i
+                        })
+                    });
+                    const endTime = Date.now();
+                    const duration = endTime - startTime;
+                    
+                    processResponse({
+                        status: response.status,
+                        statusText: response.statusText
+                    }, { type: 'Brute Force' }, duration, i + 1);
+                    
+                    // Very short delay to simulate rapid attack
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                    
+                } catch (error) {
+                    results.total++;
+                    results.errors++;
+                    const errorMsg = error.message.includes('Failed to fetch') 
+                        ? 'Backend server not reachable. Make sure it\'s running on ' + serverUrl
+                        : error.message;
+                    addResult('❌ Network Error', `Attempt ${i + 1}: ${errorMsg}`, 'error');
+                }
+                
+                updateStats();
+            }
+            
+            isTesting = false;
+            startBtn.disabled = false;
+            addResult('🏁 Brute Force Test Complete', 'Check if rate limiting blocked repeated attempts', 'info');
+        }
+
+        async function simulateRegistrationSpam(serverUrl) {
+            if (!serverUrl) {
+                addResult('⚠️ Error', 'Please enter a server URL', 'error');
+                return;
+            }
+            
+            isTesting = true;
+            startBtn.disabled = true;
+            addResult('📝 Starting Registration Spam', '10 rapid registration attempts', 'warning');
+            
+            // Fetch CSRF token first
+            await fetchCsrfToken(serverUrl);
+            
+            for (let i = 0; i < 10; i++) {
+                if (stopTestFlag) break;
+                
+                try {
+                    const headers = { 'Content-Type': 'application/json' };
+                    if (csrfToken) {
+                        headers['X-CSRF-Token'] = csrfToken;
+                    }
+                    
+                    const startTime = Date.now();
+                    const response = await fetch(serverUrl + '/api/auth/register', {
+                        method: 'POST',
+                        headers: headers,
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            username: `spamuser${i}${Date.now()}`,
+                            email: `spam${i}${Date.now()}@test.com`,
+                            password: 'SpamPass123!',
+                            confirmPassword: 'SpamPass123!'
+                        })
+                    });
+                    const endTime = Date.now();
+                    const duration = endTime - startTime;
+                    
+                    processResponse({
+                        status: response.status,
+                        statusText: response.statusText
+                    }, { type: 'Registration Spam' }, duration, i + 1);
+                    
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    
+                } catch (error) {
+                    results.total++;
+                    results.errors++;
+                    const errorMsg = error.message.includes('Failed to fetch') 
+                        ? 'Backend server not reachable. Make sure it\'s running on ' + serverUrl
+                        : error.message;
+                    addResult('❌ Network Error', `Attempt ${i + 1}: ${errorMsg}`, 'error');
+                }
+                
+                updateStats();
+            }
+            
+            isTesting = false;
+            startBtn.disabled = false;
+            addResult('🏁 Registration Spam Test Complete', 'Check if rate limiting blocked mass registrations', 'info');
+        }
+
+        async function simulateDDoSAttack(serverUrl) {
+            if (!serverUrl) {
+                addResult('⚠️ Error', 'Please enter a server URL', 'error');
+                return;
+            }
+            
+            isTesting = true;
+            startBtn.disabled = true;
+            addResult('🌪️ Starting DDoS Simulation', '50 very rapid requests to health endpoint', 'warning');
+            
+            // Use Promise.all for concurrent requests to simulate DDoS
+            const promises = [];
+            
+            for (let i = 0; i < 50; i++) {
+                promises.push(
+                    fetch(serverUrl + '/api/health', {
+                        credentials: 'include'
+                    })
+                        .then(response => ({
+                            status: response.status,
+                            statusText: response.statusText
+                        }))
+                        .catch(error => ({ 
+                            error: error.message.includes('Failed to fetch') 
+                                ? 'Backend server not reachable. Make sure it\'s running on ' + serverUrl
+                                : error.message 
+                        }))
+                );
+            }
+            
+            // Execute all requests simultaneously
+            const responses = await Promise.all(promises);
+            
+            // Process results
+            responses.forEach((response, index) => {
+                if (response.error) {
+                    results.total++;
+                    results.errors++;
+                    addResult('❌ Network Error', `Request ${index + 1}: ${response.error}`, 'error');
+                } else {
+                    processResponse(response, { type: 'DDoS Simulation' }, 0, index + 1);
+                }
+            });
+            
+            isTesting = false;
+            startBtn.disabled = false;
+            updateStats();
+            addResult('🏁 DDoS Simulation Complete', 'Check if rate limiting handled mass concurrent requests', 'info');
+        }
+
+        async function testHealthEndpoint(serverUrl) {
+            if (!serverUrl) {
+                addResult('⚠️ Error', 'Please enter a server URL', 'error');
+                return;
+            }
+            
+            addResult('❤️ Testing Health Endpoint', 'Checking if server is responsive', 'info');
+            
+            try {
+                const startTime = Date.now();
+                const response = await fetch(serverUrl + '/api/health', {
+                    credentials: 'include'
+                });
+                const endTime = Date.now();
+                const duration = endTime - startTime;
+                
+                if (response.ok) {
+                    addResult('✅ Server Healthy', `Response time: ${duration}ms | Status: ${response.status}`, 'success');
+                } else {
+                    addResult('⚠️ Server Issues', `Status: ${response.status} | Time: ${duration}ms`, 'warning');
+                }
+            } catch (error) {
+                const errorMsg = error.message.includes('Failed to fetch') 
+                    ? 'Backend server not reachable. Make sure it\'s running on ' + serverUrl + '. Also check CORS settings if accessing from file://'
+                    : error.message;
+                addResult('❌ Server Unreachable', `Error: ${errorMsg}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

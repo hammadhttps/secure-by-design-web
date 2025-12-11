@@ -68,7 +68,10 @@
         async function testConnection(name, url, options = {}) {
             const resultDiv = document.createElement('div');
             resultDiv.className = 'test-item loading';
-            resultDiv.innerHTML = `<strong>${name}</strong>: Testing...`;
+            const strong = document.createElement('strong');
+            strong.textContent = name;
+            resultDiv.appendChild(strong);
+            resultDiv.appendChild(document.createTextNode(': Testing...'));
             document.getElementById('results').appendChild(resultDiv);
 
             try {
@@ -80,17 +83,23 @@
                 const data = await response.json();
                 
                 resultDiv.className = 'test-item success';
-                resultDiv.innerHTML = `
-                    <strong>${name}</strong>: ✓ Success (${response.status})
-                    <pre>${JSON.stringify(data, null, 2)}</pre>
-                `;
+                resultDiv.textContent = '';
+                const strong2 = document.createElement('strong');
+                strong2.textContent = `${name}: ✓ Success (${response.status})`;
+                resultDiv.appendChild(strong2);
+                const pre = document.createElement('pre');
+                pre.textContent = JSON.stringify(data, null, 2);
+                resultDiv.appendChild(pre);
                 return { success: true, data };
             } catch (error) {
                 resultDiv.className = 'test-item error';
-                resultDiv.innerHTML = `
-                    <strong>${name}</strong>: ✗ Failed
-                    <pre>${error.message}</pre>
-                `;
+                resultDiv.textContent = '';
+                const strong3 = document.createElement('strong');
+                strong3.textContent = `${name}: ✗ Failed`;
+                resultDiv.appendChild(strong3);
+                const preErr = document.createElement('pre');
+                preErr.textContent = error.message;
+                resultDiv.appendChild(preErr);
                 return { success: false, error: error.message };
             }
         }
@@ -111,21 +120,25 @@
             try {
                 const directResponse = await fetch('http://localhost:3000/api/health');
                 const directData = await directResponse.json();
-                const resultDiv = document.createElement('div');
-                resultDiv.className = 'test-item success';
-                resultDiv.innerHTML = `
-                    <strong>Direct Backend Connection</strong>: ✓ Success
-                    <pre>${JSON.stringify(directData, null, 2)}</pre>
-                `;
-                document.getElementById('results').appendChild(resultDiv);
+                const resultDivDirect = document.createElement('div');
+                resultDivDirect.className = 'test-item success';
+                const strongDirect = document.createElement('strong');
+                strongDirect.textContent = 'Direct Backend Connection: ✓ Success';
+                resultDivDirect.appendChild(strongDirect);
+                const preDirect = document.createElement('pre');
+                preDirect.textContent = JSON.stringify(directData, null, 2);
+                resultDivDirect.appendChild(preDirect);
+                document.getElementById('results').appendChild(resultDivDirect);
             } catch (error) {
-                const resultDiv = document.createElement('div');
-                resultDiv.className = 'test-item error';
-                resultDiv.innerHTML = `
-                    <strong>Direct Backend Connection</strong>: ✗ Failed
-                    <pre>${error.message}</pre>
-                `;
-                document.getElementById('results').appendChild(resultDiv);
+                const resultDivDirectErr = document.createElement('div');
+                resultDivDirectErr.className = 'test-item error';
+                const strongDirectErr = document.createElement('strong');
+                strongDirectErr.textContent = 'Direct Backend Connection: ✗ Failed';
+                resultDivDirectErr.appendChild(strongDirectErr);
+                const preDirectErr = document.createElement('pre');
+                preDirectErr.textContent = error.message;
+                resultDivDirectErr.appendChild(preDirectErr);
+                document.getElementById('results').appendChild(resultDivDirectErr);
             }
         }
     </script>

@@ -60,7 +60,7 @@ class AuthService {
     );
     
     if (users.length === 0) {
-      throw new Error('Invalid credentials');
+      throw new Error('User not found');
     }
     
     const user = users[0];
@@ -69,7 +69,7 @@ class AuthService {
     const isValid = await this.verifyPassword(password, user.password_hash);
     
     if (!isValid) {
-      throw new Error('Invalid credentials');
+      throw new Error('Invalid password');
     }
     
     // Return user without password hash
@@ -110,6 +110,23 @@ class AuthService {
       );
     } catch (error) {
       logger.error('Failed to clear failed logins:', error);
+    }
+  }
+
+  static async getFailedLoginAttemptsForEmail(email, limit = 10) {
+    try {
+      const [results] = await query(
+        `SELECT id, ip_address, email, attempt_time 
+         FROM failed_logins 
+         WHERE email = ? 
+         ORDER BY attempt_time DESC 
+         LIMIT ?`,
+        [email, limit]
+      );
+      return results;
+    } catch (error) {
+      logger.error('Failed to get failed login attempts:', error);
+      return [];
     }
   }
 }

@@ -104,9 +104,10 @@ class AuthController {
     } catch (error) {
       logger.warn('Login failed:', error.message);
       
-      // Record failed attempt
-      if (req.body.email) {
+      // Only record failed login if email exists but password is wrong
+      if (error.message === 'Invalid password' && req.body.email) {
         await AuthService.recordFailedLogin(req.ip, req.body.email);
+        logger.info('Failed login recorded', { email: req.body.email, ip: req.ip });
       }
       
       res.status(401).json({ 
@@ -216,6 +217,55 @@ class AuthController {
       res.status(500).json({ 
         error: 'Analysis failed',
         message: 'Failed to analyze password'
+      });
+    }
+  }
+
+  static async getFailedLoginAttempts(req, res) {
+    try {
+      // Get user email from session
+      const userId = req.session?.userId;
+      
+      if (!userId) {
+        return res.status(401).json({
+          error: 'Unauthorized',
+          message: 'You must be logged in to view failed login attempts'
+        });
+      }
+
+      // Get user email from database
+      const { query } = require('../config/database');
+      const [users] = await query(
+        'SELECT email FROM users WHERE id = ?',
+        [userId]
+      );
+
+      if (users.length === 0) {
+        return res.status(404).json({
+          error: 'User not found',
+          message: 'User account not found'
+        });
+      }
+
+      const userEmail = users[0].email;
+
+      // Get recent failed login attempts for this email
+      const attempts = await AuthService.getFailedLoginAttemptsForEmail(userEmail, 10);
+
+      res.json({
+        attempts: attempts.map(attempt => ({
+          id: attempt.id,
+          ipAddress: attempt.ip_address,
+          email: attempt.email,
+          attemptTime: attempt.attempt_time
+        })),
+        count: attempts.length
+      });
+    } catch (error) {
+      logger.error('Failed to get failed login attempts:', error);
+      res.status(500).json({
+        error: 'Failed to fetch failed login attempts',
+        message: 'An error occurred while fetching failed login attempts'
       });
     }
   }
