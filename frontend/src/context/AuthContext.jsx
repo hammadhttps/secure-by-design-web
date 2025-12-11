@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [csrfToken, setCsrfToken] = useState('');
+  const [failedLoginAttempts, setFailedLoginAttempts] = useState([]);
 
   // Configure axios defaults
   axios.defaults.withCredentials = true;
@@ -72,6 +73,12 @@ export const AuthProvider = ({ children }) => {
       setUser(response.data.user);
       // Get new CSRF token after login (session might have changed)
       await fetchCsrfToken();
+      
+      // Wait a bit for session to be fully established, then fetch failed login attempts
+      setTimeout(async () => {
+        await fetchFailedLoginAttempts();
+      }, 500);
+      
       return { success: true };
     } catch (error) {
       // If CSRF token error, try to fetch a new token and retry once
@@ -93,6 +100,12 @@ export const AuthProvider = ({ children }) => {
           );
           setUser(retryResponse.data.user);
           await fetchCsrfToken();
+          
+          // Wait a bit for session to be fully established, then fetch failed login attempts
+          setTimeout(async () => {
+            await fetchFailedLoginAttempts();
+          }, 500);
+          
           return { success: true };
         } catch (retryError) {
           return { 
@@ -167,11 +180,40 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const fetchFailedLoginAttempts = async () => {
+    try {
+      // Only fetch if user is logged in
+      if (!user) {
+        setFailedLoginAttempts([]);
+        return;
+      }
+      
+      const response = await axios.get('/api/auth/failed-attempts', {
+        withCredentials: true
+      });
+      
+      if (response.data && response.data.attempts) {
+        setFailedLoginAttempts(response.data.attempts);
+        console.log('Failed login attempts fetched:', response.data.attempts.length);
+      } else {
+        setFailedLoginAttempts([]);
+      }
+    } catch (error) {
+      console.error('Failed to fetch failed login attempts:', error);
+      // Don't set to empty array on error - keep existing data
+      // Only set empty if it's an auth error
+      if (error.response?.status === 401) {
+        setFailedLoginAttempts([]);
+      }
+    }
+  };
+
   const logout = async () => {
     try {
       await axios.post('/api/auth/logout', {}, { withCredentials: true });
       setUser(null);
       setCsrfToken('');
+      setFailedLoginAttempts([]);
     } catch (error) {
       console.error('Logout error:', error);
     }
@@ -182,10 +224,12 @@ export const AuthProvider = ({ children }) => {
       user,
       loading,
       csrfToken,
+      failedLoginAttempts,
       login,
       register,
       logout,
-      fetchCsrfToken
+      fetchCsrfToken,
+      fetchFailedLoginAttempts
     }}>
       {children}
     </AuthContext.Provider>

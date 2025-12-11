@@ -30,43 +30,29 @@ const Posts = () => {
       const response = await axios.get('/api/posts', {
         withCredentials: true
       });
-      
-      // The backend returns { posts: [...], pagination: {...} }
+
       const postsData = response.data.posts || response.data || [];
-      
-      // Ensure postsData is an array
+
       if (!Array.isArray(postsData)) {
-        console.error('Invalid posts data format:', response.data);
         setError('Invalid data format received from server');
         setPosts([]);
         return;
       }
-      
-      // Sanitize all post content before displaying
+
       const sanitizedPosts = postsData.map(post => ({
         ...post,
         title: DOMPurify.sanitize(post.title || ''),
         content: DOMPurify.sanitize(post.content || ''),
         username: post.username ? DOMPurify.sanitize(post.username) : 'Unknown'
       }));
-      
+
       setPosts(sanitizedPosts);
-      setError(''); // Clear any previous errors
-    } catch (error) {
-      console.error('Failed to fetch posts:', error);
-      
-      // Provide more specific error messages
-      if (error.response?.status === 401) {
-        setError('You must be logged in to view posts');
-      } else if (error.response?.status === 403) {
-        setError('You do not have permission to view posts');
-      } else if (error.response?.data?.error) {
-        setError(error.response.data.error);
-      } else if (error.response?.data?.message) {
-        setError(error.response.data.message);
-      } else {
-        setError('Failed to load posts. Please try again later.');
-      }
+      setError('');
+    } catch (err) {
+      if (err.response?.status === 401) setError('You must be logged in to view posts');
+      else if (err.response?.status === 403) setError('You do not have permission to view posts');
+      else setError('Failed to load posts. Please try again later.');
+
       setPosts([]);
     }
   };
@@ -76,7 +62,6 @@ const Posts = () => {
     setSuccess('');
 
     try {
-      // Sanitize input before sending (additional layer of security)
       const sanitizedData = {
         title: sanitizeInput(data.title),
         content: sanitizeInput(data.content)
@@ -89,99 +74,112 @@ const Posts = () => {
 
       setSuccess('Post created successfully!');
       reset();
-      fetchPosts(); // Refresh posts
-    } catch (error) {
-      setError(error.response?.data?.error || 'Failed to create post');
+      fetchPosts();
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to create post');
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Create Post</h1>
-        
-        {error && (
-          <div className="mb-4 rounded-md bg-red-50 p-4">
-            <div className="text-sm text-red-700">{error}</div>
-          </div>
-        )}
-        
-        {success && (
-          <div className="mb-4 rounded-md bg-green-50 p-4">
-            <div className="text-sm text-green-700">{success}</div>
-          </div>
-        )}
+    <div className="max-w-4xl mx-auto p-6 text-gray-100">
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Title
-            </label>
-            <input
-              {...register('title')}
-              type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter post title"
-            />
-            {errors.title && (
-              <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
-              Content
-            </label>
-            <textarea
-              {...register('content')}
-              rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter post content"
-            />
-            {errors.content && (
-              <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>
-            )}
-            <p className="mt-1 text-xs text-gray-500">
-              HTML tags are not allowed for security reasons.
-            </p>
-          </div>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? 'Creating...' : 'Create Post'}
-          </button>
-        </form>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Recent Posts</h2>
-        {posts.length === 0 ? (
-          <p className="text-gray-500">No posts yet. Be the first to post!</p>
-        ) : (
-          <div className="space-y-4">
-            {posts.map(post => (
-              <div key={post.id} className="border-b border-gray-200 pb-4 last:border-b-0">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {post.title}
-                  </h3>
-                  <span className="text-sm text-gray-500">
-                    by {post.username}
-                  </span>
-                </div>
-                <p className="text-gray-600 whitespace-pre-wrap">{post.content}</p>
-                <div className="mt-2 text-sm text-gray-400">
-                  {new Date(post.created_at).toLocaleDateString()}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+    {/* Create Post Panel */}
+    <div className="bg-[#0f0f14]/80 backdrop-blur-xl border border-white/5 shadow-2xl rounded-2xl p-8 mb-10">
+      <h1 className="text-3xl font-bold mb-6 text-indigo-300">Create Post</h1>
+  
+      {/* Alerts */}
+      {error && (
+        <div className="mb-4 rounded-lg bg-red-600/20 border border-red-500/30 p-4">
+          <p className="text-sm text-red-300">{error}</p>
+        </div>
+      )}
+  
+      {success && (
+        <div className="mb-4 rounded-lg bg-green-600/20 border border-green-500/30 p-4">
+          <p className="text-sm text-green-300">{success}</p>
+        </div>
+      )}
+  
+      {/* Form */}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <div>
+          <label className="block text-sm font-semibold mb-1 text-gray-200">Title</label>
+          <input
+            {...register('title')}
+            type="text"
+            className="w-full px-4 py-3 rounded-lg 
+                       bg-white/10 border border-white/10 text-gray-100
+                       placeholder-gray-400 focus:ring-4 focus:ring-indigo-600/40
+                       focus:border-indigo-400 transition-all"
+            placeholder="Enter post title"
+          />
+          {errors.title && <p className="mt-1 text-sm text-red-400">{errors.title.message}</p>}
+        </div>
+  
+        <div>
+          <label className="block text-sm font-semibold mb-1 text-gray-200">Content</label>
+          <textarea
+            {...register('content')}
+            rows={4}
+            className="w-full px-4 py-3 rounded-lg 
+                       bg-white/10 border border-white/10 text-gray-100
+                       placeholder-gray-400 focus:ring-4 focus:ring-indigo-600/40
+                       focus:border-indigo-400 transition-all"
+            placeholder="Write something meaningful..."
+          />
+          {errors.content && <p className="mt-1 text-sm text-red-400">{errors.content.message}</p>}
+          <p className="mt-1 text-xs text-gray-500">HTML tags are blocked for security.</p>
+        </div>
+  
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="px-6 py-3 bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700
+                     rounded-lg shadow-lg shadow-indigo-900/40 font-semibold text-white 
+                     hover:from-indigo-700 hover:via-indigo-800 hover:to-purple-800
+                     focus:ring-4 focus:ring-indigo-700/40 disabled:opacity-40
+                     transition-all"
+        >
+          {isSubmitting ? 'Creating...' : 'Create Post'}
+        </button>
+      </form>
     </div>
+  
+    {/* Recent Posts */}
+    <div className="bg-[#0f0f14]/80 backdrop-blur-xl border border-white/5 shadow-xl rounded-2xl p-8">
+      <h2 className="text-2xl font-bold mb-6 text-indigo-300">Recent Posts</h2>
+  
+      {posts.length === 0 ? (
+        <p className="text-gray-400">No posts yet. Be the first to post!</p>
+      ) : (
+        <div className="space-y-6">
+          {posts.map(post => (
+            <div
+              key={post.id}
+              className="bg-white/5 border border-white/10 rounded-xl p-5 shadow-lg 
+                         hover:bg-white/10 transition-all"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="text-xl font-semibold text-gray-100">{post.title}</h3>
+                <span className="text-sm text-indigo-400">by {post.username}</span>
+              </div>
+  
+              <p className="text-gray-300 whitespace-pre-wrap leading-relaxed">
+                {post.content}
+              </p>
+  
+              <div className="mt-3 text-sm text-gray-500">
+                {new Date(post.created_at).toLocaleDateString()}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  
+  </div>
+  
+
   );
 };
 
